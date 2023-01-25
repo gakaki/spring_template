@@ -40,6 +40,8 @@ RUN bash -c "source $HOME/.sdkman/bin/sdkman-init.sh && \
     rm -rf $HOME/.sdkman/archives/* && \
     rm -rf $HOME/.sdkman/tmp/*"
 
+RUN bash -c "export JAVA_HOME=$SDKMAN_DIR/candidates/java/current"
+
 WORKDIR /app
 COPY . .
 RUN  ./gradlew nativeCompile
