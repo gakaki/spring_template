@@ -6,7 +6,7 @@ RUN  ./gradlew nativeCompile
 #/app/build/native/nativeCompile/
 
 FROM scratch as release
-COPY --from=builder /app/build/native/nativeCompile/app .
+COPY --from=builder /app/build/native/nativeCompile/java .
 EXPOSE 8080
-ENTRYPOINT ["./app"]
+ENTRYPOINT ["./java"]
 
