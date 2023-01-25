@@ -4,7 +4,7 @@
 
 FROM debian:stable-slim as Build
 
-ARG JAVA_VERSION="17"
+ARG JAVA_VERSION="22.3.r17-nik"
 ARG MAVEN_VERSION="3.6.2"
 
 ARG USER_UID="1000"
@@ -22,8 +22,6 @@ RUN apt-get update && \
 	rm -rf /tmp/*
 
 # Switching to non-root user to install SDKMAN!
-
-
 USER $USER_UID:$USER_GID
 
 # Downloading SDKMAN!
@@ -32,9 +30,12 @@ RUN curl -s "https://get.sdkman.io" | bash
 # Installing Java and Maven, removing some unnecessary SDKMAN files
 # yes | sdk install java $JAVA_VERSION && \
 # yes | sdk install maven $MAVEN_VERSION && \
+
+
 RUN bash -c "source $HOME/.sdkman/bin/sdkman-init.sh && \
-    yes | sdk install java 22.3.r17-nik &&  \
-    yes | sdk use java 22.3.r17-nik && \
+    yes | sdk install java $JAVA_VERSION &&  \
+    yes | sdk use java $JAVA_VERSION && \
+    yes | sdk default java $JAVA_VERSION && \
     yes | sdk install maven && \
     yes | sdk install gradle && \
     rm -rf $HOME/.sdkman/archives/* && \
