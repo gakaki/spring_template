@@ -1,8 +1,8 @@
-FROM bellsoft/liberica-native-image-kit-container:latest AS build
-
+#FROM bellsoft/liberica-native-image-kit-container:latest AS build
+FROM ghcr.io/graalvm/jdk:ol8-java17-22.3.0 AS build
 WORKDIR /app
 COPY . .
-RUN  mvn nativeCompile
+RUN  ./gradlew nativeCompile
 
 ############################
 # STEP 2 build a small image
