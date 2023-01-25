@@ -29,7 +29,7 @@ RUN bash -c "source $HOME/.sdkman/bin/sdkman-init.sh && \
 ENV JAVA_HOME=/home/${USER_NAME}/candidates/java/current
 WORKDIR /app
 COPY . .
-RUN  gradle nativeCompile
+RUN  ./gradlew nativeCompile
 
 
 FROM scratch
