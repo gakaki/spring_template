@@ -26,6 +26,7 @@ RUN bash -c "source $HOME/.sdkman/bin/sdkman-init.sh && \
     rm -rf $HOME/.sdkman/archives/* && \
     rm -rf $HOME/.sdkman/tmp/*"
 
+ENV JAVA_HOME=/home/${USER_NAME}/candidates/java/current
 WORKDIR /app
 COPY . .
 RUN  gradle nativeCompile
