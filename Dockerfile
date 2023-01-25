@@ -22,6 +22,8 @@ RUN apt-get update && \
 	rm -rf /tmp/*
 
 # Switching to non-root user to install SDKMAN!
+
+
 USER $USER_UID:$USER_GID
 
 # Downloading SDKMAN!
@@ -31,7 +33,8 @@ RUN curl -s "https://get.sdkman.io" | bash
 # yes | sdk install java $JAVA_VERSION && \
 # yes | sdk install maven $MAVEN_VERSION && \
 RUN bash -c "source $HOME/.sdkman/bin/sdkman-init.sh && \
-    yes | sdk install java 22.3.r17-nik && sdk use java 22.3.r17-nik && \
+    yes | sdk install java 22.3.r17-nik &&  \
+    yes | sdk use java 22.3.r17-nik && \
     yes | sdk install maven && \
     yes | sdk install gradle && \
     rm -rf $HOME/.sdkman/archives/* && \
