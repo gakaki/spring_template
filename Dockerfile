@@ -41,8 +41,6 @@ RUN bash -c "source $HOME/.sdkman/bin/sdkman-init.sh && \
     rm -rf $HOME/.sdkman/tmp/* && \
     export JAVA_HOME=$HOME/.sdkman/candidates/java/current"
 
-ENV JAVA_HOME="$HOME/.sdkman/candidates/java/current"
-ENV PATH="$JAVA_HOME/bin:$PATH"
 
 WORKDIR /app
 COPY . .
