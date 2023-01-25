@@ -38,8 +38,7 @@ RUN bash -c "source $HOME/.sdkman/bin/sdkman-init.sh && \
     yes | sdk install maven && \
     yes | sdk install gradle && \
     rm -rf $HOME/.sdkman/archives/* && \
-    rm -rf $HOME/.sdkman/tmp/* && \
-    export JAVA_HOME=$HOME/.sdkman/candidates/java/current"
+    rm -rf $HOME/.sdkman/tmp/*"
 
 WORKDIR /app
 COPY . .
