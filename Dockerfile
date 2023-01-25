@@ -16,8 +16,8 @@ RUN groupadd -g $USER_GID $USER_NAME && \
 	useradd -m -g $USER_GID -u $USER_UID $USER_NAME
 
 # Installing basic packages
-RUN apt-get update && \
-	apt-get install -y zip unzip curl && \
+RUN apt update && \
+	apt install -y zip unzip curl && \
 	rm -rf /var/lib/apt/lists/* && \
 	rm -rf /tmp/*
 
