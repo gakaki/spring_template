@@ -9,7 +9,7 @@ RUN groupadd -g $USER_GID $USER_NAME && \
 	useradd -m -g $USER_GID -u $USER_UID $USER_NAME
 
 RUN apt update && \
-	apt install -y zip unzip curl build-essential gcc && \
+	apt install -y zlib1g-dev libz-dev lib32z1-dev zip unzip curl build-essential gcc && \
 	rm -rf /var/lib/apt/lists/* && \
 	rm -rf /tmp/*
 
