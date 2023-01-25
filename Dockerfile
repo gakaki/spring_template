@@ -6,8 +6,8 @@ FROM bellsoft/liberica-native-image-kit-container:latest AS build
 
 ENV SDKMAN_DIR /root/.sdkman
 
-RUN apt-get update
-RUN apt-get -qq -y install \
+RUN apt update
+RUN apt -qq -y install \
     curl \
     unzip \
     zip
