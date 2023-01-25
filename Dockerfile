@@ -1,22 +1,40 @@
 FROM bellsoft/liberica-native-image-kit-container:latest AS build
 #FROM ghcr.io/graalvm/jdk:ol8-java17-22.3.0 AS build
-
 #FROM gradle:latest as build
-#FROM ubuntu:latest as build
 
-ENV SDKMAN_DIR /root/.sdkman
+FROM debian:stable-slim as Build
 
-RUN apt update
-RUN apt -qq -y install \
-    curl \
-    unzip \
-    zip
-RUN rm /bin/sh && ln -s /bin/bash /bin/sh
+ARG JAVA_VERSION="17"
+ARG MAVEN_VERSION="3.6.2"
 
+ARG USER_UID="1000"
+ARG USER_GID="1000"
+ARG USER_NAME="jenkins"
+
+# Creating default non-user
+RUN groupadd -g $USER_GID $USER_NAME && \
+	useradd -m -g $USER_GID -u $USER_UID $USER_NAME
+
+# Installing basic packages
+RUN apt-get update && \
+	apt-get install -y zip unzip curl && \
+	rm -rf /var/lib/apt/lists/* && \
+	rm -rf /tmp/*
+
+# Switching to non-root user to install SDKMAN!
+USER $USER_UID:$USER_GID
+
+# Downloading SDKMAN!
 RUN curl -s "https://get.sdkman.io" | bash
-RUN source "/root/.sdkman/bin/sdkman-init.sh"
-#RUN sdk install java 22.3.r17-nik && sdk use java 22.3.r17-nik
-RUN sdk install gradle
+
+# Installing Java and Maven, removing some unnecessary SDKMAN files
+RUN bash -c "source $HOME/.sdkman/bin/sdkman-init.sh && \
+    yes | sdk install java $JAVA_VERSION && \
+    yes | sdk install maven $MAVEN_VERSION && \
+    yes | sdk install gradle \
+    yes | sdk install java 22.3.r17-nik && sdk use java 22.3.r17-nik \
+    rm -rf $HOME/.sdkman/archives/* && \
+    rm -rf $HOME/.sdkman/tmp/*"
 
 WORKDIR /app
 COPY . .
