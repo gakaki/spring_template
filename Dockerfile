@@ -1,8 +1,8 @@
 #FROM bellsoft/liberica-native-image-kit-container:latest AS build
-##FROM ghcr.io/graalvm/jdk:ol8-java17-22.3.0 AS build
+FROM ghcr.io/graalvm/jdk:ol8-java17-22.3.0 AS build
 ##FROM gradle:latest as build
 
-FROM debian:stable-slim as Build
+#FROM debian:stable-slim as Build
 
 ARG JAVA_VERSION="22.3.r17-nik"
 ARG MAVEN_VERSION="3.6.2"
