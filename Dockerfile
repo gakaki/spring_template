@@ -2,15 +2,12 @@
 FROM gakaki/spring_base:latest as build
 
 ARG JAVA_VERSION="22.3.r17-nik"
-ARG USER_UID="1000"
-ARG USER_GID="1000"
 ARG USER_NAME="jenkins"
 
 ENV JAVA_HOME=/home/${USER_NAME}/.sdkman/candidates/java/current
 WORKDIR /app
 COPY . .
 RUN  ./gradlew nativeCompile
-
 
 FROM scratch
 WORKDIR /app
