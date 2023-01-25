@@ -1,14 +1,12 @@
-FROM gakaki/spring_base:latest
+FROM gakaki/spring_base:latest as builder
 
 WORKDIR /app
 COPY . .
 RUN  ./gradlew nativeCompile
+#/app/build/native/nativeCompile/
 
-#RUN  ls -lh /app/build/native/nativeCompile/
-#
-#FROM scratch as release
-#WORKDIR /app
-#COPY --from=build /app/build/native/nativeCompile/java /app/java
+FROM scratch as release
+COPY --from=builder /app/build/native/nativeCompile/app .
 EXPOSE 8080
-ENTRYPOINT ["/app/build/native/nativeCompile/java"]
+ENTRYPOINT ["./app"]
 

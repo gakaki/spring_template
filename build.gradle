@@ -8,6 +8,7 @@ plugins {
 group = 'com.gakaki'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '17'
+rootProject.name = 'app'
 
 configurations {
 	compileOnly {
