@@ -2,7 +2,7 @@ FROM bellsoft/liberica-native-image-kit-container:latest AS build
 
 WORKDIR /app
 COPY . .
-RUN ./gradlew nativeCompile
+RUN gradle nativeCompile
 
 ############################
 # STEP 2 build a small image
