@@ -9,9 +9,35 @@ RUN groupadd -g $USER_GID $USER_NAME && \
 	useradd -m -g $USER_GID -u $USER_UID $USER_NAME
 
 RUN apt update && \
-	apt install -y zlib1g-dev libz-dev lib32z1-dev zip unzip curl build-essential gcc && \
+	apt install -y \
+    libssl-dev \
+    autoconf \
+    re2c \
+    bison \
+    libsqlite3-dev \
+    libpq-dev \
+    libonig-dev \
+    libfcgi-dev \
+    libfcgi0ldbl \
+    libjpeg-dev \
+    libpng-dev \
+    libssl-dev \
+    libxml2-dev \
+    libcurl4-openssl-dev \
+    libxpm-dev \
+    libgd-dev \
+    libmysqlclient-dev \
+    libfreetype6-dev \
+    libxslt1-dev \
+    libpspell-dev \
+    libzip-dev \
+    libgccjit-10-dev \
+    zlib1g-dev libz-dev lib32z1-dev \
+    zip unzip curl wget \
+    build-essential gcc \
 	rm -rf /var/lib/apt/lists/* && \
 	rm -rf /tmp/*
+
 
 USER $USER_UID:$USER_GID
 

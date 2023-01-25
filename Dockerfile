@@ -10,4 +10,4 @@ WORKDIR /app
 COPY --from=build /app/build/native/nativeCompile/java .
 EXPOSE 8080
 ENTRYPOINT ["/app/java"]
-CMD ["/app/java"]
+#CMD ["/app/java"]
