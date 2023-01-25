@@ -6,7 +6,7 @@ ARG USER_UID="1000"
 ARG USER_GID="1000"
 ARG USER_NAME="jenkins"
 
-ENV JAVA_HOME=/home/${USER_NAME}/candidates/java/current
+ENV JAVA_HOME=/home/${USER_NAME}/.sdkman/candidates/java/current
 WORKDIR /app
 COPY . .
 RUN  ./gradlew nativeCompile
