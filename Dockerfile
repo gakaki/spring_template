@@ -30,7 +30,7 @@ RUN curl -s "https://get.sdkman.io" | bash
 # Installing Java and Maven, removing some unnecessary SDKMAN files
 # yes | sdk install java $JAVA_VERSION && \
 # yes | sdk install maven $MAVEN_VERSION && \
-
+ENV SDKMAN_DIR=/root/.sdkman
 
 RUN bash -c "source $HOME/.sdkman/bin/sdkman-init.sh && \
     yes | sdk install java $JAVA_VERSION &&  \
@@ -39,9 +39,11 @@ RUN bash -c "source $HOME/.sdkman/bin/sdkman-init.sh && \
     yes | sdk install maven && \
     yes | sdk install gradle && \
     rm -rf $HOME/.sdkman/archives/* && \
-    rm -rf $HOME/.sdkman/tmp/*"
+    rm -rf $HOME/.sdkman/tmp/* && \
+    export JAVA_HOME=$SDKMAN_DIR/candidates/java/current"
 
-RUN bash -c "export JAVA_HOME=$SDKMAN_DIR/candidates/java/current"
+ENV JAVA_HOME="$SDKMAN_DIR/candidates/java/current"
+ENV PATH="$JAVA_HOME/bin:$PATH"
 
 WORKDIR /app
 COPY . .
