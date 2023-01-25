@@ -28,11 +28,11 @@ USER $USER_UID:$USER_GID
 RUN curl -s "https://get.sdkman.io" | bash
 
 # Installing Java and Maven, removing some unnecessary SDKMAN files
+#    yes | sdk install java $JAVA_VERSION && \
 RUN bash -c "source $HOME/.sdkman/bin/sdkman-init.sh && \
-    yes | sdk install java $JAVA_VERSION && \
+    yes | sdk install java 22.3.r17-nik && sdk use java 22.3.r17-nik \
     yes | sdk install maven $MAVEN_VERSION && \
     yes | sdk install gradle \
-    yes | sdk install java 22.3.r17-nik && sdk use java 22.3.r17-nik \
     rm -rf $HOME/.sdkman/archives/* && \
     rm -rf $HOME/.sdkman/tmp/*"
 
