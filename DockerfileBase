@@ -9,7 +9,7 @@ RUN groupadd -g $USER_GID $USER_NAME && \
 	useradd -m -g $USER_GID -u $USER_UID $USER_NAME
 
 RUN apt update && \
-	apt install -y zip unzip curl && \
+	apt install -y zip unzip curl build-essential gcc && \
 	rm -rf /var/lib/apt/lists/* && \
 	rm -rf /tmp/*
 
@@ -26,5 +26,5 @@ RUN bash -c "source $HOME/.sdkman/bin/sdkman-init.sh && \
     rm -rf $HOME/.sdkman/archives/* && \
     rm -rf $HOME/.sdkman/tmp/*"
 
-ENV JAVA_HOME=/home/${USER_NAME}/candidates/java/current
+ENV JAVA_HOME=/home/${USER_NAME}/.sdkman/candidates/java/current
 
