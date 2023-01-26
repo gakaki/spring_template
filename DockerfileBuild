@@ -30,3 +30,5 @@ ENTRYPOINT ["/app/java"]
 
 # FROM debian:stable-slim ok 56mb compressed ok has muslc
 
+# muslc advantages generate smaller size binary and speed up fast in docker and arm 
+# very usage for docker and arm
