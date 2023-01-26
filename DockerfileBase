@@ -6,13 +6,6 @@ FROM debian:stable-slim
 # sed -i s/ports.ubuntu.com/mirrors.aliyun.com/g /etc/apt/sources.list && \
 # sed -i s/deb.debian.org/mirrors.aliyun.com/g /etc/apt/sources.list
 
-ARG JAVA_VERSION="22.3.r17-nik"
-ARG USER_UID="1000"
-ARG USER_GID="1000"
-ARG USER_NAME="jenkins"
-
-RUN groupadd -g $USER_GID $USER_NAME && \
-	useradd -m -g $USER_GID -u $USER_UID $USER_NAME
 
 RUN apt update 
 RUN apt install -y libssl-dev \
@@ -43,20 +36,33 @@ RUN apt install -y libssl-dev \
 	rm -rf /var/lib/apt/lists/* && \
 	rm -rf /tmp/*
 
-USER $USER_UID:$USER_GID
+# Create appuser
+ENV USER=app
+ENV UID=10001
+
+RUN adduser \
+    --disabled-password \
+    --gecos "" \
+    --home "/nonexistent" \
+    --shell "/sbin/nologin" \
+    --no-create-home \
+    --uid "${UID}" \
+    "${USER}"
 
 RUN curl -s "https://get.sdkman.io" | bash
 
-RUN bash -c "source $HOME/.sdkman/bin/sdkman-init.sh && \
+ARG JAVA_VERSION="22.3.r17-nik"
+
+RUN bash -c "source /home/${USER}/.sdkman/bin/sdkman-init.sh && \
     yes | sdk install java $JAVA_VERSION &&  \
     yes | sdk use java $JAVA_VERSION && \
     yes | sdk default java $JAVA_VERSION && \
     yes | sdk install maven && \
     yes | sdk install gradle && \
-    rm -rf $HOME/.sdkman/archives/* && \
-    rm -rf $HOME/.sdkman/tmp/*"
+    rm -rf /home/${USER}/.sdkman/archives/* && \
+    rm -rf /home/${USER}/.sdkman/tmp/*"
     
-ENV JAVA_HOME=/home/${USER_NAME}/.sdkman/candidates/java/current
-ENV PATH="${PATH}:/home/${USER_NAME}/.sdkman/candidates/gradle/current/bin/"
-ENV PATH="${PATH}:/home/${USER_NAME}/.sdkman/candidates/maven/current/bin/"
+ENV JAVA_HOME=/home/${USER}/.sdkman/candidates/java/current
+ENV PATH="${PATH}:/home/${USER}/.sdkman/candidates/gradle/current/bin/"
+ENV PATH="${PATH}:/home/${USER}/.sdkman/candidates/maven/current/bin/"
 
