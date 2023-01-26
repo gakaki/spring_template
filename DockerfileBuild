@@ -14,9 +14,9 @@ COPY --from=builder /etc/group /etc/group
 WORKDIR /app
 EXPOSE 8080
 COPY --from=builder /app/build/native/nativeCompile/java ./
-RUN ls /app
+# RUN ls /app
 
-USER app:app
+# USER app:app
 
-# ENTRYPOINT ["/app/java"]
-CMD ["/app/java"]
+ENTRYPOINT ["/app/java"]
+# CMD ["/app/java"]
