@@ -1,11 +1,10 @@
 FROM debian:stable-slim
 
-# RUN sed -i s/archive.ubuntu.com/mirrors.aliyun.com/g /etc/apt/sources.list
-# RUN sed -i s/security.ubuntu.com/mirrors.aliyun.com/g /etc/apt/sources.list
-# RUN sed -i s/cn.archive.ubuntu.com/mirrors.aliyun.com/g /etc/apt/sources.list
-# RUN sed -i s/ports.ubuntu.com/mirrors.aliyun.com/g /etc/apt/sources.list
-# RUN sed -i s/deb.debian.org/mirrors.aliyun.com/g /etc/apt/sources.list
-
+RUN sed -i s/archive.ubuntu.com/mirrors.aliyun.com/g /etc/apt/sources.list && \
+sed -i s/security.ubuntu.com/mirrors.aliyun.com/g /etc/apt/sources.list && \
+sed -i s/cn.archive.ubuntu.com/mirrors.aliyun.com/g /etc/apt/sources.list && \
+sed -i s/ports.ubuntu.com/mirrors.aliyun.com/g /etc/apt/sources.list && \
+sed -i s/deb.debian.org/mirrors.aliyun.com/g /etc/apt/sources.list
 
 ARG JAVA_VERSION="22.3.r17-nik"
 ARG USER_UID="1000"
@@ -15,8 +14,8 @@ ARG USER_NAME="jenkins"
 RUN groupadd -g $USER_GID $USER_NAME && \
 	useradd -m -g $USER_GID -u $USER_UID $USER_NAME
 
-RUN apt update && \
-	apt install -y libssl-dev \
+RUN apt update 
+RUN apt install -y libssl-dev \
     autoconf \
     re2c \
     bison \
@@ -32,7 +31,7 @@ RUN apt update && \
     libcurl4-openssl-dev \
     libxpm-dev \
     libgd-dev \
-    libmysqlclient-dev \
+    libmariadb-dev \
     libfreetype6-dev \
     libxslt1-dev \
     libpspell-dev \
