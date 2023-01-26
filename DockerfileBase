@@ -1,10 +1,10 @@
 FROM debian:stable-slim
 
-RUN sed -i s/archive.ubuntu.com/mirrors.aliyun.com/g /etc/apt/sources.list
-RUN sed -i s/security.ubuntu.com/mirrors.aliyun.com/g /etc/apt/sources.list
-RUN sed -i s/cn.archive.ubuntu.com/mirrors.aliyun.com/g /etc/apt/sources.list
-RUN sed -i s/ports.ubuntu.com/mirrors.aliyun.com/g /etc/apt/sources.list
-RUN sed -i s/deb.debian.org/mirrors.aliyun.com/g /etc/apt/sources.list
+# RUN sed -i s/archive.ubuntu.com/mirrors.aliyun.com/g /etc/apt/sources.list
+# RUN sed -i s/security.ubuntu.com/mirrors.aliyun.com/g /etc/apt/sources.list
+# RUN sed -i s/cn.archive.ubuntu.com/mirrors.aliyun.com/g /etc/apt/sources.list
+# RUN sed -i s/ports.ubuntu.com/mirrors.aliyun.com/g /etc/apt/sources.list
+# RUN sed -i s/deb.debian.org/mirrors.aliyun.com/g /etc/apt/sources.list
 
 
 ARG JAVA_VERSION="22.3.r17-nik"
