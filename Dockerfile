@@ -1,8 +1,5 @@
-FROM gakaki/spring_base:latest as builder
+FROM gakaki/spring_build:latest as builder
 
-WORKDIR /app
-COPY . .
-RUN  gradle nativeCompile
 
 # FROM scratch as release
 # WORKDIR /app

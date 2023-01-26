@@ -1,12 +1,5 @@
 FROM gakaki/spring_base:latest as builder
 
-ARG USER_NAME="jenkins"
 WORKDIR /app
 COPY . .
-RUN bash -c "source /home/${USER_NAME}/.sdkman/bin/sdkman-init.sh && gradle nativeCompile"
-
-FROM scratch as release
-WORKDIR /app
-COPY --from=builder /app/build/native/nativeCompile/java ./
-EXPOSE 8080
-CMD ["/app/java"]
+RUN  gradle nativeCompile
