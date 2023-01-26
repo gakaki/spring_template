@@ -4,14 +4,8 @@ WORKDIR /app
 COPY . .
 RUN  gradle nativeCompile
 
-# FROM bellsoft/liberica-native-image-kit-container:jdk-17-nik-22.2-stream-musl
-# FROM bellsoft/liberica-native-image-kit-container:latest
-FROM bellsoft/alpaquita-linux-base:stream-musl
-# FROM debian:stable-slim
-# FROM alpine
-# FROM scratch
+FROM debian:stable-slim
 
-# Import from builder.
 COPY --from=builder /etc/passwd /etc/passwd
 COPY --from=builder /etc/group /etc/group
 
@@ -21,4 +15,18 @@ COPY --from=builder /app/build/native/nativeCompile/java ./
 RUN ls
 USER app:app
 ENTRYPOINT ["/app/java"]
-# CMD ["/app/java"]
+
+
+# below will say no such file or directory because not install musl c lib
+# can not run may be no musl comporesd size 29mb
+# FROM bellsoft/alpaquita-linux-base:stream-musl
+
+
+# ok has musl but big 180mb
+# FROM bellsoft/liberica-native-image-kit-container:jdk-17-nik-22.2-stream-musl
+
+# FROM scratch and alpine need install muslc can not run
+
+
+# FROM debian:stable-slim ok 56mb compressed ok has muslc
+
