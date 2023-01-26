@@ -4,7 +4,8 @@ WORKDIR /app
 COPY . .
 RUN  gradle nativeCompile
 
-FROM alpine
+FROM debian:stable-slim
+# FROM alpine
 # FROM scratch
 
 # Import from builder.
@@ -14,9 +15,7 @@ COPY --from=builder /etc/group /etc/group
 WORKDIR /app
 EXPOSE 8080
 COPY --from=builder /app/build/native/nativeCompile/java ./
-# RUN ls /app
-
-# USER app:app
-
+RUN ls
+USER app:app
 ENTRYPOINT ["/app/java"]
 # CMD ["/app/java"]
