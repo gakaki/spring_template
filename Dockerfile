@@ -15,6 +15,9 @@ RUN  gradle nativeCompile
 FROM alpine
 WORKDIR /app
 COPY --from=builder /app/build/native/nativeCompile/java ./
-USER jenkins:jenkins
+
+ARG USER_NAME="jenkins"
+USER $USER_NAME:$USER_NAME
+
 EXPOSE 8080
 CMD ["/app/java"]
