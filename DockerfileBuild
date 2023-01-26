@@ -4,7 +4,10 @@ WORKDIR /app
 COPY . .
 RUN  gradle nativeCompile
 
-FROM debian:stable-slim
+# FROM bellsoft/liberica-native-image-kit-container:jdk-17-nik-22.2-stream-musl
+# FROM bellsoft/liberica-native-image-kit-container:latest
+FROM bellsoft/alpaquita-linux-base:stream-musl
+# FROM debian:stable-slim
 # FROM alpine
 # FROM scratch
 
