@@ -51,6 +51,8 @@ RUN bash -c "source $HOME/.sdkman/bin/sdkman-init.sh && \
     yes | sdk install gradle && \
     rm -rf $HOME/.sdkman/archives/* && \
     rm -rf $HOME/.sdkman/tmp/*"
-
+    
 ENV JAVA_HOME=/home/${USER_NAME}/.sdkman/candidates/java/current
+ENV PATH="${PATH}:/home/${USER_NAME}/.sdkman/candidates/gradle/current/bin/"
+ENV PATH="${PATH}:/home/${USER_NAME}/.sdkman/candidates/maven/current/bin/"
 
