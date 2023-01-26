@@ -34,7 +34,7 @@ RUN apt update && \
     libgccjit-10-dev \
     zlib1g-dev libz-dev lib32z1-dev \
     zip unzip curl wget \
-    build-essential gcc \
+    build-essential gcc && \
 	rm -rf /var/lib/apt/lists/* && \
 	rm -rf /tmp/*
 
