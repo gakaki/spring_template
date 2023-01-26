@@ -8,11 +8,13 @@ RUN  gradle nativeCompile
 # WORKDIR /app
 # COPY --from=builder /app/build/native/nativeCompile/java ./
 # EXPOSE 8080
-# ENTRYPOINT ["/app/java"]
+# USER jenkins:jenkins
+# # ENTRYPOINT ["/app/java"]
 # CMD ["/app/java"]
 
 FROM alpine
 WORKDIR /app
 COPY --from=builder /app/build/native/nativeCompile/java ./
-# USER jenkins:myip
+USER jenkins:jenkins
+EXPOSE 8080
 CMD ["/app/java"]
