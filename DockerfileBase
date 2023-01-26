@@ -6,7 +6,6 @@ FROM debian:stable-slim
 # sed -i s/ports.ubuntu.com/mirrors.aliyun.com/g /etc/apt/sources.list && \
 # sed -i s/deb.debian.org/mirrors.aliyun.com/g /etc/apt/sources.list
 
-
 RUN apt update 
 RUN apt install -y libssl-dev \
     autoconf \
@@ -36,6 +35,26 @@ RUN apt install -y libssl-dev \
 	rm -rf /var/lib/apt/lists/* && \
 	rm -rf /tmp/*
 
+RUN curl -s "https://get.sdkman.io" | bash
+
+
+ENV SDK_MAN=/root/.sdkman
+ENV SDK_MAN_CAN=${SDK_MAN}/candidates
+ARG JAVA_VERSION="22.3.r17-nik"
+
+RUN bash -c "source ${SDK_MAN}/bin/sdkman-init.sh && \
+    yes | sdk install java $JAVA_VERSION &&  \
+    yes | sdk use java $JAVA_VERSION && \
+    yes | sdk default java $JAVA_VERSION && \
+    yes | sdk install maven && \
+    yes | sdk install gradle && \
+    rm -rf ${SDK_MAN}/archives/* && \
+    rm -rf ${SDK_MAN}/tmp/*"
+    
+ENV JAVA_HOME=${SDK_MAN_CAN}/java/current
+ENV PATH="${PATH}:${SDK_MAN_CAN}/gradle/current/bin/"
+ENV PATH="${PATH}:${SDK_MAN_CAN}/maven/current/bin/"
+
 # Create appuser
 ENV USER=app
 ENV UID=10001
@@ -48,21 +67,3 @@ RUN adduser \
     --no-create-home \
     --uid "${UID}" \
     "${USER}"
-
-RUN curl -s "https://get.sdkman.io" | bash
-
-ARG JAVA_VERSION="22.3.r17-nik"
-
-RUN bash -c "source /home/${USER}/.sdkman/bin/sdkman-init.sh && \
-    yes | sdk install java $JAVA_VERSION &&  \
-    yes | sdk use java $JAVA_VERSION && \
-    yes | sdk default java $JAVA_VERSION && \
-    yes | sdk install maven && \
-    yes | sdk install gradle && \
-    rm -rf /home/${USER}/.sdkman/archives/* && \
-    rm -rf /home/${USER}/.sdkman/tmp/*"
-    
-ENV JAVA_HOME=/home/${USER}/.sdkman/candidates/java/current
-ENV PATH="${PATH}:/home/${USER}/.sdkman/candidates/gradle/current/bin/"
-ENV PATH="${PATH}:/home/${USER}/.sdkman/candidates/maven/current/bin/"
-
